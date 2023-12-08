@@ -13,7 +13,7 @@ This package provides basic implementation of arbitrary finite-dimensional Lie a
 * universal enveloping algebras and basic operations within them
 
 ## Installation
-Make sure you have installed SymPy package for your Python environment. You can do so by executing:
+Make sure you have installed the Sympy package for your Python environment. You can do so by executing:
 ```
 pip install --user sympy
 ```
