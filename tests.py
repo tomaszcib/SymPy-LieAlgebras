@@ -10,10 +10,6 @@ def timing(f):
         return ret
     return wrap
 
-@timing
-def calcRepresentation(L):
-    return L.Representation()
-
 # Launch the tests for files in 'examples'
 for i in range(10):
     if i < 9: L = LieAlgebra.fromFile("examples/" + str(i+1) + ".py")
@@ -36,11 +32,6 @@ for i in range(10):
     LCS = len(nil.LowerCentralSeries())
     print('    {:<14} {:>4}'.format('DS', DS))
     print('    {:<14} {:>4}'.format('LCS', LCS))
-
-    print("c) Representation")
-    rep = calcRepresentation(L)
-    dim_rep = list(rep.values())[0].cols
-    print('    {:<14} {:>4}'.format('dim', dim_rep))
     
     notes = "    "
     if dim_nil == n: notes += " nilpotent"

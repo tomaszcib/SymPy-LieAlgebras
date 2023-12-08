@@ -5,6 +5,40 @@ from utils import *
 import itertools
 
 class LieAlgebra:
+    r"""
+    Create an instance of custom finite dimenional Lie algebra with given
+    variables serving as basis and definiton of Lie bracket.
+
+    Explanation
+    ===========
+
+    This constructor takes two arguments:
+    - a list of basis elements, nominatively list of objects of class
+        sympy.Symbol with parameter `commutative=False` (important!)
+    - a list of 2-tuples of the form ([x,y], expr) where `x` and `y`
+        refer to variables used as basis elements and expr is the result
+        of Lie bracket [x,y]. The function will automatically define
+        [y,x] := -[x,y], so you do not have to declare all of the entries
+
+    Note that the Lie bracket definition need to satisfy Jacobi identity.
+    If it fails to do so, an exception is risen and LieAlgebra object will
+    not be constructed.
+
+    Examples
+    ===========
+    >>> from sympy import *
+    >>> from LieAlgebra import *
+    >>> x=[Symbol("x_"+str(i+1), commutative=False) for i in range(5)]
+    >>> consts = [
+        ([x[0],x[1]], 0), ([x[0],x[2]], 0), ([x[0],x[3]], 0),
+        ([x[0],x[4]], -x[0]),  ([x[1],x[2]], 0), ([x[1],x[3]], x[0]),
+        ([x[1],x[4]], 0), ([x[2],x[3]], x[1]), ([x[2],x[4]], x[2]),
+        ([x[3],x[4]], -x[3])]
+    >>> L = LieAlgebra(x, consts)
+    >>> print(L)
+    Lie algebra <x_1, x_2, x_3, x_4, x_5, >
+
+    """
 
     def __init__(self, basis, struct_const, plain=False, **kwargs):
         self.basisElements = basis
@@ -36,6 +70,10 @@ class LieAlgebra:
             "Some basis elements have commutative=True property"
 
     def __str__(self):
+        """
+        Pretty-print the LieAlgebra object.
+
+        """
         out = "Lie algebra <"
         variables = Matrix(self.basisElements)
         for b in self.basis:
@@ -45,7 +83,7 @@ class LieAlgebra:
     @staticmethod
     def fromFile(f):
         """
-        Load Lie algebra from file.
+        Load Lie algebra from file. Used for testing only.
 
         """
         loc = {}
@@ -55,8 +93,8 @@ class LieAlgebra:
     @staticmethod
     def gl(n):
         """
-        Returns the gl(n, K) Lie algebra.
-
+        Create a LieAlgebra class instance of gl(n) general linear Lie algebra with respect
+        to the standard basis.
         """
         N = n ** 2
         e = [Symbol("e"+str(i//n)+str(i%n), commutative=False) for i in range(N)]
