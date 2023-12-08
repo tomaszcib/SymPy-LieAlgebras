@@ -194,6 +194,27 @@ class LieAlgebra:
                 for i in z:
                     if i != 0: return False
         return True
+    
+    def isSolvable(self):
+        """
+        Return `true` if the algebra is solvable and `false` otherwise.
+        """
+        # The algebra is semisimple iff its solvable radical equals the algebra.
+        return len(self.SolvableRadical().basis) == len(self.basis)
+    
+    def isNilpotent(self):
+        """
+        Return `true` if the algebra is nilpotent and `false` otherwise.
+        """
+        # The algebra is nilpotent iff its nilradical equals the algebra.
+        return len(self.NilRadical().basis) == len(self.basis)
+    
+    def isSemisimple(self):
+        """
+        Return `true` if the algebra is semisimple and `false` otherwise.
+        """
+        # The algebra is semisimple iff its solvable radical is trivial
+        return self.SolvableRadical().isZero()
 
     def isValidSubalgebra(self, X):
         """
